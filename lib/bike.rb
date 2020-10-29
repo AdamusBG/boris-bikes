@@ -1,7 +1,7 @@
 class Bike
 
-  def initialize
-  	@working = true
+  def initialize(working = true)
+  	@working = working
   end
 
   def working?
@@ -10,5 +10,9 @@ class Bike
 
   def update_to_broken
     @working = false
+  end
+
+  def repair
+    @working = true
   end
 end

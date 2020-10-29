@@ -25,16 +25,25 @@ class DockingStation
   end
 
   def dock(bike, working = true)
-  	if @bike_array.length < @capacity && working == true
+  	if @bike_array.length < @capacity && working == true # returning a bike and not reporting it as broken
   	  @bike_array.push(bike)
-  	elsif @bike_array.length < @capacity && working == false
-  	  bike.update_to_broken # need to implement this
+  	elsif @bike_array.length < @capacity && working == false # returning a bike and reporting it as broken
+  	  bike.update_to_broken
       @bike_array.push(bike)
-  	else
+  	else # trying to dock at full capacity
   	  raise StandardError.new "You cannot dock a bike, this station is already at capacity"
   	end
   end
 
+  def release_broken_bikes
+    bikes_to_be_fixed = []
+    @bike_array.each_with_index do |bike, index|
+      if !bike.working?
+        bikes_to_be_fixed << bike
+        @bike_array.delete_at(index)
+      end
+    end
+    bikes_to_be_fixed
+  end
 
 end
-
